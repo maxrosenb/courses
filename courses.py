@@ -5,13 +5,17 @@ class Course:
     def __init__(self, name, days="Mon", start="15:00", end="16:30", utils=5):
         self.name = name
         self.days = [time.strptime(day, "%a") for day in days]
+        self.daysAsStrings = [time.strftime("%a", day) for day in self.days]
+        self.dayAsSingleString = ""
+        for day in self.daysAsStrings:
+          self.dayAsSingleString += day[0]
         self.start = time.strptime(start, "%H:%M")
         self.end = time.strptime(end, "%H:%M")
         self.utils = utils
     def __str__(self):
-        return "{} {} {}".format(self.name, time.strftime("%H:%M",self.start), time.strftime("%H:%M",self.end))
+        return "{} {} {} {}".format(self.name, self.days,time.strftime("%H:%M",self.start), time.strftime("%H:%M",self.end))
     def __repr__(self):
-        return "{} {} {}".format(self.name, time.strftime("%H:%M",self.start), time.strftime("%H:%M",self.end), self.days)
+        return "{} {} {} {}".format(self.name, time.strftime("%H:%M",self.start), time.strftime("%H:%M",self.end), self.dayAsSingleString)
 
 def overlap(course1, course2):
     overlapping = list(set(course1.days).intersection(set(course2.days)))
